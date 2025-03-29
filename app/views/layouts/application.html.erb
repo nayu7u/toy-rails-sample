@@ -22,6 +22,18 @@
     <%= javascript_importmap_tags %>
   </head>
 
+  <header>
+    <nav class="bg-gray-800 p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-white text-lg font-bold">Workspace</a>
+        <div>
+          <%= link_to "Home", root_path, class: "text-white px-4 py-2" %>
+          <%= link_to "Components", home_components_path, class: "text-white px-4 py-2" %>
+        </div>
+      </div>
+    </nav>
+  </header>
+
   <body>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
