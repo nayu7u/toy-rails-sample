@@ -8,7 +8,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'nayu7u/flowbite-importmap-rails'
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'nayu7u/toy-rails-sample'
     steps:
       - name: Dependabot metadata
         id: metadata
