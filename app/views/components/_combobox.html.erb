@@ -16,11 +16,11 @@
       data-combobox-target="list" 
       class="absolute w-full mt-2 bg-white border rounded-lg shadow-lg overflow-hidden z-10" 
       hidden
-      role="listbox" id="combobox-list"
+      role="listbox" id="combobox-list"  aria-activedescendant=""
     >
       <% items = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %>
       <% items.each do |item| %>
-        <li data-combobox-target="item" class="px-4 py-2 hover:bg-gray-100 cursor-pointer" role="option"><%= item %></li>
+        <li data-combobox-target="item" class="px-4 py-2 hover:bg-gray-100 cursor-pointer" role="option" aria-selected="false"><%= item %></li>
       <% end %>
     </ul>
   </div>
