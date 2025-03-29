@@ -18,4 +18,7 @@ class HomeController < ApplicationController
 
     render :index
   end
+
+  def components
+  end
 end
