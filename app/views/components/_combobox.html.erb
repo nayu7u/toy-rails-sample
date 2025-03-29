@@ -18,11 +18,10 @@
       hidden
       role="listbox" id="combobox-list"
     >
-      <li data-combobox-target="item" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Next.js</li>
-      <li data-combobox-target="item" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">SvelteKit</li>
-      <li data-combobox-target="item" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Nuxt.js</li>
-      <li data-combobox-target="item" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Remix</li>
-      <li data-combobox-target="item" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Astro</li>
+      <% items = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %>
+      <% items.each do |item| %>
+        <li data-combobox-target="item" class="px-4 py-2 hover:bg-gray-100 cursor-pointer" role="option"><%= item %></li>
+      <% end %>
     </ul>
   </div>
 </div>
