@@ -7,6 +7,7 @@ export default class extends Controller {
   connect() {
     this.listTarget.hidden = true;
     this.inputTarget.addEventListener("input", () => this.filter());
+    this.inputTarget.addEventListener("focus", () => this.showAll());
     this.itemTargets.forEach(item => {
       item.addEventListener("click", (event) => this.select(event));
     });
@@ -20,6 +21,11 @@ export default class extends Controller {
       const text = item.textContent.toLowerCase();
       item.hidden = !text.includes(query);
     });
+  }
+
+  showAll() {
+    this.listTarget.hidden = false;
+    this.itemTargets.forEach(item => item.hidden = false);
   }
 
   select(event) {
