@@ -6,7 +6,7 @@ export default class extends Controller {
 
   connect() {
     this.listTarget.hidden = true;
-    this.inputTarget.addEventListener("input", this.debounce(() => this.filter(), 250));
+    this.inputTarget.addEventListener("input", () => this.filter());
     this.inputTarget.addEventListener("focus", () => this.showAll());
     this.itemTargets.forEach(item => {
       item.addEventListener("click", (event) => this.select(event));
