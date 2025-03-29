@@ -1,0 +1,16 @@
+<%= turbo_frame_tag dom_id(vote) do %>
+    <div class="flex items-center">
+    <div class="m-2">
+        <%= vote.name %>
+    </div>
+    <div class="m-2">
+        <%= vote.count %>
+    </div>
+    <div class="m-2">
+        <%= form_with url: home_vote_path, method: :post, local: true do |form| %>
+        <%= form.hidden_field :name, value: vote.name.downcase %>
+        <%= form.submit 'Vote', class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+        <% end %>
+    </div>
+    </div>
+<% end %>

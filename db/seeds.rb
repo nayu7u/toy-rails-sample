@@ -7,3 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+[ "Vim", "Emacs", "Visual Studio Code" ].each do |editor_name|
+  Vote.create!(name: editor_name)
+end

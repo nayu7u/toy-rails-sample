@@ -1,3 +1,7 @@
+<%= turbo_stream_from "home-vote" %>
 <div>
   <h1 class="font-bold text-4xl">sample page</h1>
+  <% Vote.all.each do |vote| %>
+    <%= render partial: "home/vote", locals: { vote: vote } %>
+  <% end %>
 </div>
