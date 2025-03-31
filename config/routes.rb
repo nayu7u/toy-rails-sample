@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :reservations do
+    # NOTE: collection じゃないと、URLが /reservations/:id/refresh になってしまう
+    collection do
+      post :refresh
+    end
+  end
   get "home/index"
   post "home/vote"
 

@@ -8,6 +8,26 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-[ "Vim", "Emacs", "Visual Studio Code" ].each do |editor_name|
-  Vote.create!(name: editor_name)
+ActiveRecord::Base.transaction do
+  [ "Vim", "Emacs", "Visual Studio Code" ].each do |editor_name|
+    Vote.find_or_create_by!(name: editor_name)
+  end
+
+  CourseCategory.find_or_create_by!(name: "Programming") do |category|
+    category.course_sub_categories.build(name: "Ruby")
+    category.course_sub_categories.build(name: "JavaScript")
+    category.course_sub_categories.build(name: "Python")
+  end
+
+  CourseCategory.find_or_create_by!(name: "Language") do |category|
+    category.course_sub_categories.build(name: "English")
+    category.course_sub_categories.build(name: "Spanish")
+    category.course_sub_categories.build(name: "French")
+  end
+
+  CourseCategory.find_or_create_by!(name: "ビジネススキル") do |category|
+    category.course_sub_categories.build(name: "マネジメント")
+    category.course_sub_categories.build(name: "マーケティング")
+    category.course_sub_categories.build(name: "営業")
+  end
 end
