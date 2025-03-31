@@ -1,32 +1,55 @@
-<%= form_with(model: reservation, class: "contents") do |form| %>
-  <% if reservation.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+<turbo-frame id="reservation-form" data-controller="ghost-form">
+  <%= form_with(model: reservation, data: { "turbo-frame" => "_top", "ghost-form-target" => "originalForm" }, class: "contents") do |form| %>
+    <% if reservation.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+        <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
 
-      <ul class="list-disc ml-6">
-        <% reservation.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul class="list-disc ml-6">
+          <% reservation.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="my-5">
+      <%= form.label :date %>
+      <%= form.date_field :date, \
+      data: { action: "ghost-form#submit" }, \
+      class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", \
+      {
+        "border-gray-400 focus:outline-blue-600": reservation.errors[:date].none?, \
+        "border-red-400 focus:outline-red-600": reservation.errors[:date].any? \
+      }] %>
+    </div>
+
+    <div class="my-5">
+      <%= form.label :course_category %>
+      <%= form.collection_select :course_category_id, \
+      CourseCategory.all, :id, :name, \
+      { include_blank: "Select a category" }, \
+      data: { action: "ghost-form#submit" }, \
+      class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full border-gray-400 focus:outline-blue-600" %>
+    </div>
+
+    <div class="my-5">
+      <%= form.label :course_sub_category %>
+      <%= form.collection_select :course_sub_category_id, \
+      reservation.course_category&.course_sub_categories || [], :id, :name, \
+      { include_blank: "Select a sub category" }, \
+      data: { action: "ghost-form#submit" }, \
+      class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full border-gray-400 focus:outline-blue-600" %>
+    </div>
+
+    <div class="inline">
+      <% # TODO: EditでTurbo Framesを実行したときに update ボタンでなく create ボタンになってしまうのを直す %>
+      <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :date %>
-    <%= form.date_field :date, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": reservation.errors[:date].none?, "border-red-400 focus:outline-red-600": reservation.errors[:date].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :course_category %>
-    <%= form.collection_select :course_category_id, CourseCategory.all, :id, :name, { include_blank: "Select a category" }, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full border-gray-400 focus:outline-blue-600" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :course_sub_category %>
-    <%= form.collection_select :course_sub_category_id, CourseSubCategory.all, :id, :name, { include_blank: "Select a sub category" }, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full border-gray-400 focus:outline-blue-600" %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-  </div>
-<% end %>
+  <%= form_with scope: "ghost_reservation", model: @reservation, url: refresh_reservations_path, method: :post, data: { "ghost-form-target" => "ghostForm" } do |f| %>
+    <%= f.hidden_field :date %>
+    <%= f.hidden_field :course_category_id %>
+    <%= f.hidden_field :course_sub_category_id %>
+  <% end %>
+</turbo-frame>

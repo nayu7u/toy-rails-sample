@@ -3,7 +3,8 @@ class ReservationsController < ApplicationController
 
   # GET /reservations
   def index
-    @reservations = Reservation.all
+    @reservations = Reservation.all.reverse.take(5)
+    Reservation.where.not(id: @reservations.pluck(:id)).destroy_all
   end
 
   # GET /reservations/1
@@ -45,6 +46,11 @@ class ReservationsController < ApplicationController
     redirect_to reservations_path, notice: "Reservation was successfully destroyed.", status: :see_other
   end
 
+  def refresh
+    @reservation = Reservation.new(reservation_params(scope: :ghost_reservation))
+    render :new
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_reservation
@@ -52,7 +58,7 @@ class ReservationsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def reservation_params
-      params.expect(reservation: [ :date, :course_category_id, :course_sub_category_id ])
+    def reservation_params(scope: :reservation)
+      params.expect(scope => [ :date, :course_category_id, :course_sub_category_id ])
     end
 end

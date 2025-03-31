@@ -5,6 +5,7 @@ export default class extends Controller {
   static targets = [ "originalForm", "ghostForm" ]
 
   submit(event) {
+    console.log("stimulus!!") // Debugging!
     const formData = new FormData(this.originalFormTarget)
     formData.delete("_method")
     formData.delete("authenticity_token")
