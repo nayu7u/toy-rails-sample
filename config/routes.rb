@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reservations
   get "home/index"
   post "home/vote"
 
