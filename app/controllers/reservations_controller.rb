@@ -53,6 +53,6 @@ class ReservationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def reservation_params
-      params.expect(reservation: [ :date ])
+      params.expect(reservation: [ :date, :course_category_id, :course_sub_category_id ])
     end
 end

@@ -16,6 +16,16 @@
     <%= form.date_field :date, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": reservation.errors[:date].none?, "border-red-400 focus:outline-red-600": reservation.errors[:date].any?}] %>
   </div>
 
+  <div class="my-5">
+    <%= form.label :course_category %>
+    <%= form.collection_select :course_category_id, CourseCategory.all, :id, :name, { include_blank: "Select a category" }, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full border-gray-400 focus:outline-blue-600" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :course_sub_category %>
+    <%= form.collection_select :course_sub_category_id, CourseSubCategory.all, :id, :name, { include_blank: "Select a sub category" }, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full border-gray-400 focus:outline-blue-600" %>
+  </div>
+
   <div class="inline">
     <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
   </div>
